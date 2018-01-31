@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Svetlana Borisova](https://up.htmlacademy.ru/php/4/user/142107).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Зубов].
 
 ---
 
