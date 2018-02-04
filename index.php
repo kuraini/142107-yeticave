@@ -51,6 +51,24 @@ $lots = [
         'image' => 'img/lot-6.jpg'
     ]
 ];
+
+/**
+ * Функция форматирования суммы и добавления к ней знака рубля
+ *
+ * @param integer цена за лот, сумма в рублях $price
+ * @return string отформатированная сумма вместе со знаком рубля
+ */
+
+ function formatSum($price) {
+    $price = ceil($price);
+
+    if ($price > 1000) {
+        $price = number_format($price, 0, '', ' ');
+    }
+    $price .= "&nbsp;&#8381;";
+
+    return $price;
+ }
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -137,7 +155,7 @@ $lots = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$lot['price']; ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=formatSum($lot['price']); ?></span>
                         </div>
                         <div class="lot__timer timer">
 
