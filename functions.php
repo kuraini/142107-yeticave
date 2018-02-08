@@ -26,16 +26,14 @@ function formatSum($price) {
   */
 
 function renderTemplate($path, $data) {
-    if (!file_exists($path)) {
-        return '';
-    }
-    if (is_array($data)) {
-        extract($data);
+    $output = "";
+    if (file_exists($path)) {
+        ob_start('ob_gzhandler');
+        extract($data, EXTR_SKIP);
+        require_once($path);
+        $output = ob_get_clean();
     }
 
-    ob_start();
-    require_once($path);
-
-    return ob_get_clean();
+    return $output;
 }
 ?>
