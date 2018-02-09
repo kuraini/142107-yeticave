@@ -6,6 +6,11 @@ $is_auth = (bool) rand(0, 1);
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
 
+date_default_timezone_set('Europe/Moscow');
+
+$time_difference = strtotime('tomorrow') - time();
+$time_left = date("H:i", mktime(0, 0, $time_difference));
+
 $categories = [
     'Доски и лыжи',
     'Крепления',
@@ -54,7 +59,10 @@ $lots = [
     ]
 ];
 
-$page_content = renderTemplate('templates/index.php', ['lots' => $lots]);
+$page_content = renderTemplate('templates/index.php', [
+    'lots' => $lots,
+    'time_left' => $time_left
+]);
 $layout_content = renderTemplate('templates/layout.php', [
     'content' => $page_content,
     'title' => 'Главная',
