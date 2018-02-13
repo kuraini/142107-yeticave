@@ -1,18 +1,19 @@
 <?php
 /**
- * Функция форматирования суммы и добавления к ней знака рубля
+ * Функция форматирования суммы и добавления к ней знака валюты
  *
  * @param integer $price цена за лот, сумма в рублях
- * @return string отформатированная сумма вместе со знаком рубля
+ * @param string $currency знак валюты, значение по умолчанию - знак рубля
+ * @return string отформатированная сумма вместе со знаком валюты
  */
 
-function formatSum($price) {
+function formatSum($price, $currency = '&nbsp;&#8381;') {
     $price = ceil($price);
 
     if ($price > 1000) {
         $price = number_format($price, 0, '', ' ');
     }
-    $price .= "&nbsp;&#8381;";
+    $price .= $currency;
 
     return $price;
  }
