@@ -31,6 +31,9 @@
 /* Общее */
 
 body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   min-width: 1140px;
   background-color: #dbe6e9;
   font-family: "PT Sans", sans-serif;
@@ -76,6 +79,10 @@ h2 {
   clip: rect(0, 0, 0, 0);
   -webkit-clip-path: inset(100%);
   clip-path: inset(100%);
+}
+
+.main {
+  flex: 1;
 }
 
 .container {
@@ -369,6 +376,7 @@ h2 {
   padding: 12px 10px;
   font-weight: 700;
   color: #45abde;
+  background-color: #ffffff;
 }
 
 .nav__item a::before {
