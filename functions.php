@@ -37,4 +37,54 @@ function renderTemplate($path, $data) {
 
     return $output;
 }
+
+/**
+ * Функция склонения слов в зависимости от числа
+ *
+ * @param integer $number число в зависимости от которого будем склонять слово
+ * @param array $forms_of_word массив из форм слова в порядке: для 1, для 2, для 5
+ * @param string форма слова
+ */
+
+function doDeclination($number, $forms_of_word) {
+    $keys = [2, 0, 1, 1, 1, 2];
+    $mod = $number % 100;
+    $key = ($mod > 7 && $mod < 20) ? 2 : $keys[min($mod % 10, 5)];
+
+    return $forms_of_word[$key];
+}
+
+/**
+ * Функция форматирования времени ставки
+ *
+ * @param string $ts метка времени
+ * @param string $func ссылка на функцию склонения слов
+ * @param string время добавления ставки
+ */
+
+function formatTime($ts, $func = 'doDeclination') {
+    $time_difference = time() - $ts;
+    $seconds_in_day = 86400;
+    $seconds_in_hour = 3600;
+    $seconds_in_minute = 60;
+    $forms_for_minutes = ['минута', 'минуты', 'минут'];
+    $forms_for_hours = ['час', 'часа', 'часов'];
+
+    if ($time_difference > $seconds_in_day) {
+        $date = date('d.m.y в H:i', $ts);
+
+        return $date;
+    } else {
+        $hours = floor($time_difference / $seconds_in_hour);
+        $minutes = floor($time_difference / $seconds_in_minute);
+
+        if ($time_difference > $seconds_in_hour) {
+            $time = $hours . ' ' . $func($hours, $forms_for_hours);
+        } else {
+            $time = $minutes . ' ' . $func($minutes, $forms_for_minutes);
+        }
+
+        return $time;
+    }
+}
 ?>

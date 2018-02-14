@@ -10,7 +10,8 @@ if (!$lot) {
 
 $page_content = renderTemplate('templates/lot.php', [
     'lot' => $lot,
-    'time_left' => $time_left
+    'time_left' => $time_left,
+    'categories' => $categories
 ]);
 $layout_content = renderTemplate('templates/layout.php', [
     'content' => $page_content,

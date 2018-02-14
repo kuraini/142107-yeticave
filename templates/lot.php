@@ -1,3 +1,12 @@
+<nav class="nav">
+    <ul class="nav__list container">
+    <?php foreach ($categories as $category): ?>
+      <li class="nav__item">
+        <a href="all-lots.html"><?=$category; ?></a>
+      </li>
+    <? endforeach; ?>
+    </ul>
+</nav>
 <section class="lot-item container">
 <?php if (isset($lot)): ?>
     <h2><?=htmlspecialchars($lot['name']); ?></h2>
@@ -7,7 +16,7 @@
           <img src="<?=$lot['image']; ?>" width="730" height="548" alt="<?=htmlspecialchars($lot['name']); ?>">
         </div>
         <p class="lot-item__category">Категория: <span><?=$lot['category']; ?></span></p>
-        <p class="lot-item__description"><?=htmlspecialchars($lot['description']); ?></p>
+        <p class="lot-item__description"><?=htmlspecialchars($lot['message']); ?></p>
       </div>
       <div class="lot-item__right">
         <div class="lot-item__state">
@@ -17,16 +26,16 @@
           <div class="lot-item__cost-state">
             <div class="lot-item__rate">
               <span class="lot-item__amount">Текущая цена</span>
-              <span class="lot-item__cost"><?=formatSum(htmlspecialchars($lot['price'])); ?></span>
+              <span class="lot-item__cost"><?=formatSum(htmlspecialchars($lot['lot-rate'])); ?></span>
             </div>
             <div class="lot-item__min-cost">
-              Мин. ставка <span><?=formatSum(htmlspecialchars($lot['price']), '&nbsp;р'); ?></span>
+              Мин. ставка <span><?=formatSum(htmlspecialchars($lot['lot-step']), '&nbsp;р'); ?></span>
             </div>
           </div>
           <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
             <p class="lot-item__form-item">
               <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="<?=formatSum(htmlspecialchars($lot['price']), ''); ?>">
+              <input id="cost" type="number" name="cost" placeholder="<?=formatSum(htmlspecialchars($lot['lot-step']), ''); ?>">
             </p>
             <button type="submit" class="button">Сделать ставку</button>
           </form>
@@ -39,7 +48,7 @@
             <tr class="history__item">
               <td class="history__name"><?=htmlspecialchars($bet['name']); ?></td>
               <td class="history__price"><?=formatSum(htmlspecialchars($bet['price']), '&nbsp;р'); ?></td>
-              <td class="history__time"><?=$bet['ts']; ?></td>
+              <td class="history__time"><?=formatTime($bet['ts']); ?></td>
             </tr>
           <?php endforeach; ?>
           </table>
