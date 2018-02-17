@@ -2,6 +2,13 @@
 require_once 'functions.php';
 require_once 'data.php';
 
+session_start();
+
+if (!isAuth()) {
+    http_response_code(403);
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST;
     $errors = [];
@@ -29,6 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $errors[$field] = 'Шаг ставки должен быть числом больше нуля';
             }
         }
+        if ($field == 'lot-date') {
+            if (!strtotime($_POST['lot-date'])) {
+                $errors[$field] = 'Введите дату в формате дд.мм.гггг';
+            }
+            if (strtotime($_POST['lot-date']) < strtotime('tomorrow')) {
+                $errors[$field] = 'Дата должна быть больше текущей хотя бы на 1 день';
+            }
+        }
     }
 
     if (!empty($_FILES['image']['name'])) {
@@ -37,14 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $path = 'img/' . $_FILES['image']['name'];
         $file_type = finfo_file($finfo, $tmp_name);
 
-        if ($file_type !== 'image/jpeg') {
-            $errors['image'] = 'Изображение должно быть в формате jpg';
+        if ($file_type !== 'image/jpeg' && $file_type !== 'image/png') {
+            $errors['image'] = 'Изображение должно быть в формате jpg или png';
         } else {
             move_uploaded_file($tmp_name, $path);
             $lot['image'] = $path;
         }
     } else {
-        $errors['image'] = 'Загрузите файл в формате jpg';
+        $errors['image'] = 'Загрузите файл в формате jpg или png';
     }
 
     if (count($errors)) {
@@ -69,10 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_content = renderTemplate('templates/layout.php', [
     'content' => $page_content,
     'title' => 'Добавление лота',
-    'categories' => $categories,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'user_avatar' => $user_avatar
+    'categories' => $categories
 ]);
 
 print($layout_content);
