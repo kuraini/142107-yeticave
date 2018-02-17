@@ -1,4 +1,8 @@
 <?php
+define('SECONDS_IN_MINUTE', 60);
+define('SECONDS_IN_HOUR', 3600);
+define('SECONDS_IN_DAY', 86400);
+
 /**
  * Функция форматирования суммы и добавления к ней знака валюты
  *
@@ -64,21 +68,18 @@ function doDeclination($number, $forms_of_word) {
 
 function formatTime($ts, $func = 'doDeclination') {
     $time_difference = time() - $ts;
-    $seconds_in_day = 86400;
-    $seconds_in_hour = 3600;
-    $seconds_in_minute = 60;
     $forms_for_minutes = ['минута', 'минуты', 'минут'];
     $forms_for_hours = ['час', 'часа', 'часов'];
 
-    if ($time_difference > $seconds_in_day) {
+    if ($time_difference > SECONDS_IN_DAY) {
         $date = date('d.m.y в H:i', $ts);
 
         return $date;
     } else {
-        $hours = floor($time_difference / $seconds_in_hour);
-        $minutes = floor($time_difference / $seconds_in_minute);
+        $hours = floor($time_difference / SECONDS_IN_HOUR);
+        $minutes = floor($time_difference / SECONDS_IN_MINUTE);
 
-        if ($time_difference > $seconds_in_hour) {
+        if ($time_difference > SECONDS_IN_HOUR) {
             $time = $hours . ' ' . $func($hours, $forms_for_hours);
         } else {
             $time = $minutes . ' ' . $func($minutes, $forms_for_minutes);
@@ -86,5 +87,22 @@ function formatTime($ts, $func = 'doDeclination') {
 
         return $time;
     }
+}
+
+/**
+ * Функция считает сколько времени осталось до конца ставки
+ *
+ * @param string $date дата когда заканчивается время аукциона на лот
+ * @return string оставшееся время в формате "чч:мм";
+ */
+
+function countRemainingTime($date) {
+    $ts = strtotime($date);
+    $time_difference = $ts - time();
+    $hours = floor($time_difference / SECONDS_IN_HOUR);
+    $minutes = floor($time_difference / SECONDS_IN_MINUTE) % SECONDS_IN_MINUTE;
+    $time_left = sprintf('%2d:%02d', $hours, $minutes);
+
+    return $time_left;
 }
 ?>
