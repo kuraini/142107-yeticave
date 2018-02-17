@@ -41,7 +41,7 @@
                         <span class="lot__cost"><?=formatSum(htmlspecialchars($lot['lot-rate'])); ?></span>
                     </div>
                     <div class="lot__timer timer">
-                        <?=$time_left; ?>
+                        <?=countRemainingTime($lot['lot-date']); ?>
                     </div>
                 </div>
             </div>
