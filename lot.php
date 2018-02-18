@@ -2,6 +2,8 @@
 require_once 'functions.php';
 require_once 'data.php';
 
+session_start();
+
 $lot = $lots[$_GET['id']] ?? null;
 $visited_lots = [];
 
@@ -20,6 +22,7 @@ if (isset($_GET['id'])) {
 
 if (!$lot) {
     http_response_code(404);
+    exit();
 }
 
 $page_content = renderTemplate('templates/lot.php', [
@@ -30,10 +33,7 @@ $page_content = renderTemplate('templates/lot.php', [
 $layout_content = renderTemplate('templates/layout.php', [
     'content' => $page_content,
     'title' => $lot['name'] ? htmlspecialchars($lot['name']) : 'Лот не найден',
-    'categories' => $categories,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'user_avatar' => $user_avatar
+    'categories' => $categories
 ]);
 
 print($layout_content);

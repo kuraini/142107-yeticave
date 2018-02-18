@@ -19,6 +19,7 @@
         <p class="lot-item__description"><?=htmlspecialchars($lot['message']); ?></p>
       </div>
       <div class="lot-item__right">
+        <?php if (isAuth()): ?>
         <div class="lot-item__state">
           <div class="lot-item__timer timer">
             <?=countRemainingTime($lot['lot-date']); ?>
@@ -35,11 +36,12 @@
           <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
             <p class="lot-item__form-item">
               <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="<?=formatSum(htmlspecialchars($lot['lot-step']), ''); ?>">
+              <input id="cost" type="number" name="cost" placeholder="<?=formatSum(htmlspecialchars($lot['lot-step'] + htmlspecialchars($lot['lot-rate'])), ''); ?>">
             </p>
             <button type="submit" class="button">Сделать ставку</button>
           </form>
         </div>
+        <?php endif; ?>
         <div class="history">
         <?php if (isset($lot['bets'])): ?>
           <h3>История ставок (<span><?=count($lot['bets']); ?></span>)</h3>

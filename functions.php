@@ -105,4 +105,48 @@ function countRemainingTime($date) {
 
     return $time_left;
 }
+
+/**
+ * Функция поиска пользователя по email
+ *
+ * @param string $email email введенный пользователем
+ * @param array $users массив с зарегистрированными пользователями
+ * @return array|null массив с данными пользователя или null
+ */
+
+function searchUserByEmail($email, $users) {
+    $result = null;
+    foreach ($users as $user) {
+        if ($user['email'] == $email) {
+            $result = $user;
+            break;
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * Функция переадресации
+ *
+ * @param string $path путь по умолчанию на главную страницу
+ */
+
+function redirectTo($path = '/') {
+    header("Location: $path");
+    exit();
+}
+
+/**
+ * Функция проверки на аутентификацию
+ *
+ * @return boolean если пользователь аутентифицирован, то возвращает true
+ */
+
+function isAuth() {
+    if (!empty($_SESSION['user'])) {
+        return true;
+    }
+    return false;
+}
 ?>
