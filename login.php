@@ -1,7 +1,8 @@
 <?php
 require_once 'functions.php';
 require_once 'data.php';
-require_once 'userdata.php';
+require_once 'mysql_helper.php';
+require_once 'init.php';
 
 session_start();
 
@@ -24,14 +25,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    if (!count($errors) && $user = searchUserbyEmail($form['email'], $users)) {
-        if (password_verify($form['password'], $user['password'])) {
-            $_SESSION['user'] = $user;
+    if (!count($errors)) {
+        $sql = "SELECT * FROM `users` WHERE `email` = ?";
+        $stmt = db_get_prepare_stmt($link, $sql, [$form['email']]);
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+        if ($res) {
+            if (mysqli_num_rows($res)) {
+                $user = mysqli_fetch_assoc($res);
+                if (password_verify($form['password'], $user['password'])) {
+                    $_SESSION['user'] = $user;
+                } else {
+                    $errors['password'] = 'Вы ввели неверный пароль';
+                }
+            } else {
+                $errors['email'] = 'Такой пользователь не найден';
+            }
         } else {
-            $errors['password'] = 'Вы ввели неверный пароль';
+            $error = mysqli_error($link);
         }
-    } else {
-        $errors['email'] = 'Такой пользователь не найден';
     }
 
     if (count($errors)) {
@@ -40,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'form' => $form,
             'errors' => $errors
         ]);
+    } elseif ($error) {
+        $page_content = renderTemplate('templates/error.php', ['error' => $error]);
     } else {
         redirectTo();
     }
