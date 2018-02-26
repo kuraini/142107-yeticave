@@ -23,7 +23,7 @@ VALUES
   'ignat.v@gmail.com',
   '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka',
   'img/user.jpg',
-  NULL,
+  'Свяжитесь со мной по email: ignat.v@gmail.com',
   '2018-01-30 22:10:00'
 ),
 (
@@ -31,7 +31,7 @@ VALUES
   'kitty_93@li.ru',
   '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa',
   'img/user.jpg',
-  NULL,
+  'Свяжитесь со мной по email: kitty_93@li.ru',
   '2018-02-02 15:25:00'
 ),
 (
@@ -39,7 +39,7 @@ VALUES
   'warrior07@mail.ru',
   '$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW',
   'img/user.jpg',
-  NULL,
+  'Свяжитесь со мной по email: warrior07@mail.ru',
   '2018-02-15 20:05:00'
 );
 
