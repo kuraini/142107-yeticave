@@ -28,7 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (!isset($errors['email'])) {
-        $stmt = db_get_prepare_stmt($link, "SELECT `email` FROM `users` WHERE `email` = ?", [$form['email']]);
+        $sql = "SELECT `email` FROM `users` WHERE `email` = ?";
+        $stmt = db_get_prepare_stmt($link, $sql, [$form['email']]);
         mysqli_stmt_execute($stmt);
         $res = mysqli_stmt_get_result($stmt);
         if ($res) {
