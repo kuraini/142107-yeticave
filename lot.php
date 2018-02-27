@@ -1,5 +1,6 @@
 <?php
 require_once 'functions.php';
+require_once 'init.php';
 require_once 'data.php';
 
 session_start();
@@ -32,7 +33,7 @@ $page_content = renderTemplate('templates/lot.php', [
 ]);
 $layout_content = renderTemplate('templates/layout.php', [
     'content' => $page_content,
-    'title' => $lot['name'] ? htmlspecialchars($lot['name']) : 'Лот не найден',
+    'title' => $lot['title'] ? htmlspecialchars($lot['title']) : 'Лот не найден',
     'categories' => $categories
 ]);
 

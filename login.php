@@ -1,10 +1,10 @@
 <?php
 require_once 'functions.php';
-require_once 'data.php';
-require_once 'mysql_helper.php';
+//require_once 'mysql_helper.php';
 require_once 'init.php';
+require_once 'data.php';
 
-session_start();
+//session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form = $_POST;
@@ -34,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (mysqli_num_rows($res)) {
                 $user = mysqli_fetch_assoc($res);
                 if (password_verify($form['password'], $user['password'])) {
+                    $_SESSION = [];
+                    session_start();
                     $_SESSION['user'] = $user;
                 } else {
                     $errors['password'] = 'Вы ввели неверный пароль';

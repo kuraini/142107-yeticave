@@ -1,10 +1,9 @@
 <?php
 require_once 'functions.php';
-require_once 'mysql_helper.php';
 require_once 'init.php';
 require_once 'data.php';
 
-session_start();
+//session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form = $_POST;
