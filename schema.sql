@@ -18,7 +18,7 @@ CREATE TABLE `users` (
   `password` char(100) NOT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `contacts` varchar(255) NOT NULL,
-  `date_reg` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_reg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

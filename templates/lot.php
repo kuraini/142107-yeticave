@@ -15,7 +15,7 @@
         <div class="lot-item__image">
           <img src="<?=$lot['image']; ?>" width="730" height="548" alt="<?=htmlspecialchars($lot['title']); ?>">
         </div>
-        <p class="lot-item__category">Категория: <span><?=$categories[$lot['category_id']-1]['name']; ?></span></p>
+        <p class="lot-item__category">Категория: <span><?=$lot['category']; ?></span></p>
         <p class="lot-item__description"><?=htmlspecialchars($lot['description']); ?></p>
       </div>
       <div class="lot-item__right">
@@ -30,7 +30,7 @@
               <span class="lot-item__cost"><?=formatSum(htmlspecialchars($lot['start_price'])); ?></span>
             </div>
             <div class="lot-item__min-cost">
-              Мин. ставка <span><?=formatSum(htmlspecialchars($lot['start_price']), '&nbsp;р'); ?></span>
+              Мин. ставка <span><?=formatSum(htmlspecialchars($lot['step']), '&nbsp;р'); ?></span>
             </div>
           </div>
           <?php if ($_SESSION['user']['id'] != $lot['author_id']): ?>

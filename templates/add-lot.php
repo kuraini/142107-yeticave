@@ -21,8 +21,10 @@
         <label for="category">Категория</label>
         <select id="category" name="category_id" required>
           <option value="">Выберите категорию</option>
-        <?php foreach ($categories as $index => $category): ?>
-          <option value="<?=++$index; ?>" <?=isset($lot['category_id']) ? 'selected' : ''; ?>><?=$category['name']; ?></option>
+        <?php foreach ($categories as $category): ?>
+          <option value="<?=$category['id']; ?>" <?=(isset($lot['category_id']) && $lot['category_id'] == $category['id']) ? 'selected' : ''; ?>>
+            <?=$category['name']; ?>
+          </option>
         <?php endforeach; ?>
         </select>
         <span class="form__error"><?=$errors['category_id'] ?? ''; ?></span>
@@ -43,7 +45,7 @@
         </div>
       </div>
       <div class="form__input-file">
-        <input class="visually-hidden" type="file" id="photo2" value="" name="image">
+        <input class="visually-hidden" type="file" id="photo2" value="<?=$lot['image'] ?? ''; ?>" name="image">
         <label for="photo2">
           <span>+ Добавить</span>
         </label>

@@ -70,14 +70,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'errors' => $errors
         ]);
     } else {
-        $lot['author_id'] = $_SESSION['user']['id'];
-        $lot['date_start'] = time();
-        $lot['date_end'] = strtotime($lot['date_end']);
-        $page_content = renderTemplate('templates/lot.php', [
-            'categories' => $categories,
-            'lot' => $lot,
-            'bets' => $bets
-        ]);
+        $title = $lot['name'];
+        $cat = $lot['category_id'];
+        $img = $lot['image'];
+        $descr = $lot['description'];
+        $price = $lot['start_price'];
+        $step = $lot['step'];
+        $end = strtotime($lot['date_end']);
+        $author = $_SESSION['user']['id'];
+
+        $sql = "INSERT INTO `lots` (
+            `title`,
+            `category_id`,
+            `image`,
+            `description`,
+            `start_price`,
+            `step`,
+            `date_start`,
+            `date_end`,
+            `author_id`
+        )
+        VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
+
+        $stmt = db_get_prepare_stmt($link, $sql, [$title, $cat, $img, $descr, $price, $step, $end, $author]);
+        $res = mysqli_stmt_execute($stmt);
+        if ($res) {
+            $lot_id = mysqli_insert_id($link);
+            header("Location: lot.php?id=" . $lot_id);
+        } else {
+            $error = mysqli_error($link);
+            $page_content = renderTemplate('templates/error.php', ['error' => $error]);
+        }
     }
 } else {
     $page_content = renderTemplate('templates/add-lot.php', [

@@ -3,7 +3,7 @@ require_once 'init.php';
 
 date_default_timezone_set('Europe/Moscow');
 
-$sql_categories = "SELECT `name` FROM `categories` ORDER BY `id`";
+$sql_categories = "SELECT * FROM `categories` ORDER BY `id`";
 $sql_lots = "SELECT
     l.`id`,
     l.`title`,

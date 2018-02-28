@@ -5,7 +5,23 @@ require_once 'data.php';
 
 session_start();
 
-$lot = $lots[$_GET['id']] ?? null;
+$lot_id = $_GET['id'] ?? null;
+$sql =
+"SELECT
+    l.`title`,
+    l.`image`,
+    l.`description`,
+    l.`start_price`,
+    l.`step`,
+    UNIX_TIMESTAMP(l.`date_end`) AS date_end,
+    l.`author_id`,
+    c.`name` AS category
+FROM `lots` AS l
+JOIN `categories` AS c ON l.`category_id` = c.`id`
+WHERE l.`id` = $lot_id";
+$res = mysqli_query($link, $sql);
+$lot = mysqli_fetch_assoc($res);
+
 $visited_lots = [];
 
 if (isset($_COOKIE['history'])) {
