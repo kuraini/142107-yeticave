@@ -70,13 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'errors' => $errors
         ]);
     } else {
-        $title = $lot['name'];
+        $title = $lot['title'];
         $cat = $lot['category_id'];
         $img = $lot['image'];
         $descr = $lot['description'];
         $price = $lot['start_price'];
         $step = $lot['step'];
-        $end = strtotime($lot['date_end']);
+        $end = $lot['date_end'];
         $author = $_SESSION['user']['id'];
 
         $sql = "INSERT INTO `lots` (
@@ -101,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = mysqli_error($link);
             $page_content = renderTemplate('templates/error.php', ['error' => $error]);
         }
+
     }
 } else {
     $page_content = renderTemplate('templates/add-lot.php', [

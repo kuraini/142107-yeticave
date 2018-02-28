@@ -32,7 +32,7 @@ CREATE TABLE `lots` (
   `start_price` int(11) UNSIGNED NOT NULL,
   `step` int(11) UNSIGNED NOT NULL,
   `date_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_end` datetime NOT NULL,
+  `date_end` timestamp NOT NULL,
   `author_id` int(11) UNSIGNED NOT NULL,
   `winner_id` int(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id`),
