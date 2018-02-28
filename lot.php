@@ -1,10 +1,27 @@
 <?php
 require_once 'functions.php';
+require_once 'init.php';
 require_once 'data.php';
 
 session_start();
 
-$lot = $lots[$_GET['id']] ?? null;
+$lot_id = $_GET['id'] ?? null;
+$sql =
+"SELECT
+    l.`title`,
+    l.`image`,
+    l.`description`,
+    l.`start_price`,
+    l.`step`,
+    UNIX_TIMESTAMP(l.`date_end`) AS date_end,
+    l.`author_id`,
+    c.`name` AS category
+FROM `lots` AS l
+JOIN `categories` AS c ON l.`category_id` = c.`id`
+WHERE l.`id` = $lot_id";
+$res = mysqli_query($link, $sql);
+$lot = mysqli_fetch_assoc($res);
+
 $visited_lots = [];
 
 if (isset($_COOKIE['history'])) {
@@ -32,7 +49,7 @@ $page_content = renderTemplate('templates/lot.php', [
 ]);
 $layout_content = renderTemplate('templates/layout.php', [
     'content' => $page_content,
-    'title' => $lot['name'] ? htmlspecialchars($lot['name']) : 'Лот не найден',
+    'title' => $lot['title'] ? htmlspecialchars($lot['title']) : 'Лот не найден',
     'categories' => $categories
 ]);
 
