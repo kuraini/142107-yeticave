@@ -49,7 +49,6 @@ if (!empty($bets)) {
     unset($bet);
 }
 
-var_dump($bets);
 $page_content = renderTemplate('templates/my-lots.php', [
     'categories' => $categories,
     'bets' => $bets
