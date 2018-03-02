@@ -102,6 +102,10 @@ function countRemainingTime($date) {
     $minutes = floor($time_difference / SECONDS_IN_MINUTE) % SECONDS_IN_MINUTE;
     $time_left = sprintf('%2d:%02d', $hours, $minutes);
 
+    if ($time_difference <= 0) {
+        return 'Время истекло';
+    }
+
     return $time_left;
 }
 
@@ -182,13 +186,32 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  * @return array массив с данными
  */
 
-function selectData($link, $sql, $data = []) {
+function selectAll($link, $sql, $data = []) {
     $select_data = [];
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     if ($res) {
         $select_data = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    }
+
+    return $select_data;
+}
+
+
+/**
+ * Функцция для получения одной записи из БД
+ *
+ * @param mysqli $link ресурс соединения
+ * @param string $sql SQL запрос
+ * @return array массив с данными
+ */
+
+function selectOne($link, $sql) {
+    $select_data = [];
+    $res = mysqli_query($link, $sql);
+    if ($res) {
+        $select_data = mysqli_fetch_assoc($res);
     }
 
     return $select_data;

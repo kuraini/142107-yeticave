@@ -33,11 +33,11 @@
               Мин. ставка <span><?=formatSum(htmlspecialchars($lot['step']), '&nbsp;р'); ?></span>
             </div>
           </div>
-          <?php if ($_SESSION['user']['id'] != $lot['author_id']): ?>
-          <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+          <?php if ($canAddBet): ?>
+          <form class="lot-item__form" action="lot.php?id=<?=$lot_id?>" method="post">
             <p class="lot-item__form-item">
               <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="<?=formatSum(htmlspecialchars($lot['step'] + htmlspecialchars($lot['start_price'])), ''); ?>">
+              <input id="cost" type="number" name="price" placeholder="<?=formatSum(htmlspecialchars($min_bet), ''); ?>">
             </p>
             <button type="submit" class="button">Сделать ставку</button>
           </form>
@@ -45,14 +45,14 @@
         </div>
         <?php endif; ?>
         <div class="history">
-        <?php if (isset($lot['bets'])): ?>
-          <h3>История ставок (<span><?=count($lot['bets']); ?></span>)</h3>
+        <?php if ($bets): ?>
+          <h3>История ставок (<span><?=count($bets); ?></span>)</h3>
           <table class="history__list">
-          <?php foreach($lot['bets'] as $bet):?>
+          <?php foreach($bets as $bet):?>
             <tr class="history__item">
               <td class="history__name"><?=htmlspecialchars($bet['name']); ?></td>
               <td class="history__price"><?=formatSum(htmlspecialchars($bet['price']), '&nbsp;р'); ?></td>
-              <td class="history__time"><?=formatTime($bet['ts']); ?></td>
+              <td class="history__time"><?=formatTime(htmlspecialchars($bet['date_add'])); ?></td>
             </tr>
           <?php endforeach; ?>
           </table>

@@ -154,7 +154,27 @@ INSERT INTO `bets`
 VALUES
 ('2018-02-15 17:20:00', 27000, 1, 2),
 ('2018-02-17 10:45:00', 16000, 2, 1),
-('2018-02-20 15:20:00', 8000, 3, 4);
+('2018-02-20 15:20:00', 16000, 3, 4);
+
+INSERT INTO `users_bets`
+(
+  `user_id`,
+  `bet_id`
+)
+SELECT
+  `user_id`,
+  `id`
+FROM `bets`;
+
+INSERT INTO `users_lots`
+(
+  `user_id`,
+  `lot_id`
+)
+SELECT
+  `author_id`,
+  `id`
+FROM `lots`;
 
 /* получить список всех категорий */
 SELECT * FROM `categories`;
