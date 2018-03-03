@@ -1,12 +1,4 @@
-<nav class="nav">
-    <ul class="nav__list container">
-    <?php foreach ($categories as $category): ?>
-      <li class="nav__item">
-        <a href="all-lots.html"><?=$category['name']; ?></a>
-      </li>
-    <? endforeach; ?>
-    </ul>
-</nav>
+<?=renderTemplate('templates/nav.php', ['categories' => $categories]); ?>
 <section class="lot-item container">
 <?php if (isset($lot)): ?>
     <h2><?=htmlspecialchars($lot['title']); ?></h2>
@@ -21,7 +13,7 @@
       <div class="lot-item__right">
         <?php if (isAuth()): ?>
         <div class="lot-item__state">
-          <div class="lot-item__timer timer">
+          <div class="lot-item__timer timer <?php if ($lot['date_end'] < time()): ?>timer--end<?php endif; ?>">
             <?=countRemainingTime($lot['date_end']); ?>
           </div>
           <div class="lot-item__cost-state">

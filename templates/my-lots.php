@@ -1,12 +1,4 @@
-<nav class="nav">
-    <ul class="nav__list container">
-    <?php foreach ($categories as $category): ?>
-      <li class="nav__item">
-        <a href="all-lots.html"><?=$category['name']; ?></a>
-      </li>
-    <? endforeach; ?>
-    </ul>
-</nav>
+<?=renderTemplate('templates/nav.php', ['categories' => $categories]); ?>
 <section class="rates container">
     <h2>Мои ставки</h2>
     <?php if (!empty($bets)): ?>
@@ -26,7 +18,13 @@
           <?=$bet['category'] ?? ''; ?>
         </td>
         <td class="rates__timer">
-          <div class="timer <?=$bet['timer'] ?? ''; ?>"><?=countremainingTime(htmlspecialchars($bet['date_end'])); ?></div>
+          <div class="timer <?=$bet['timer'] ?? ''; ?>">
+          <?php if (is_numeric($bet['date_end'])): ?>
+            <?=countRemainingTime(htmlspecialchars($bet['date_end'])); ?>
+          <?php else: ?>
+            <?=htmlspecialchars($bet['date_end']); ?>
+          <?php endif; ?>
+          </div>
         </td>
         <td class="rates__price">
           <?=formatSum(htmlspecialchars($bet['price']), '&nbsp;р'); ?>

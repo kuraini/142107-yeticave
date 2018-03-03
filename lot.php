@@ -7,42 +7,39 @@ session_start();
 
 $user = $_SESSION['user'] ?? '';
 $user_id = $_SESSION['user']['id'] ?? '';
-
+$bet = null;
+$bet_id = null;
 $lot_id = intval($_GET['id'] ?? null);
 
-$sql_for_lot =
-"SELECT
-    l.`title`,
-    l.`image`,
-    l.`description`,
-    l.`start_price`,
-    l.`step`,
-    UNIX_TIMESTAMP(l.`date_end`) AS date_end,
-    l.`author_id`,
-    c.`name` AS category
-FROM `lots` AS l
-JOIN `categories` AS c ON l.`category_id` = c.`id`
-WHERE l.`id` = $lot_id";
+$sql_for_lot = "SELECT
+                    l.`title`,
+                    l.`image`,
+                    l.`description`,
+                    l.`start_price`,
+                    l.`step`,
+                    UNIX_TIMESTAMP(l.`date_end`) AS date_end,
+                    l.`author_id`,
+                    c.`name` AS category
+                FROM `lots` AS l
+                JOIN `categories` AS c ON l.`category_id` = c.`id`
+                WHERE l.`id` = $lot_id";
 
-$sql_for_bets =
-"SELECT
-    u.`name`,
-    UNIX_TIMESTAMP(b.`date`) AS date_add,
-    b.`price`
-FROM `bets` AS b
-JOIN `users` AS u ON b.`user_id` = u.`id`
-WHERE `lot_id` = $lot_id
-ORDER BY b.`date` DESC";
+$sql_for_bets = "SELECT
+                    u.`name`,
+                    UNIX_TIMESTAMP(b.`date`) AS date_add,
+                    b.`price`
+                FROM `bets` AS b
+                JOIN `users` AS u ON b.`user_id` = u.`id`
+                WHERE `lot_id` = $lot_id
+                ORDER BY b.`date` DESC";
 
-$sql_for_max_bet =
-"SELECT MAX(`price`) as max_price
-FROM `bets`
-WHERE `lot_id` = $lot_id";
+$sql_for_max_bet = "SELECT MAX(`price`) as max_price
+                    FROM `bets`
+                    WHERE `lot_id` = $lot_id";
 
-$sql_for_user_bet =
-"SELECT `user_id`
-FROM `bets`
-WHERE `lot_id` = $lot_id AND `user_id` = $user_id";
+$sql_for_user_bet = "SELECT `user_id`
+                    FROM `bets`
+                    WHERE `lot_id` = $lot_id AND `user_id` = $user_id";
 
 $bets = selectAll($link, $sql_for_bets);
 $lot = selectOne($link, $sql_for_lot);
@@ -65,7 +62,6 @@ $min_bet = $lot['start_price'] + $lot['step'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $bet = intval($_POST['price']);
-    $bet_id = null;
 
     if (empty($bet)) {
         header("Location: /lot.php?id=$lot_id");
@@ -81,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     `user_id`,
                     `lot_id`
                 )
-                VALUES(NOW(), $bet, $user_id, $lot_id)";
+                VALUES (NOW(), $bet, $user_id, $lot_id)";
 
             $sql2 = "UPDATE `lots` SET `start_price` = $bet WHERE `id` = $lot_id";
 

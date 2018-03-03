@@ -49,3 +49,9 @@
     <?php endforeach; ?>
     </ul>
 </section>
+<?=renderTemplate('templates/pagination.php', [
+        'page_name' => $page_name,
+        'pages' => $pages,
+        'pages_count' => $pages_count,
+        'cur_page' => $cur_page
+]); ?>
