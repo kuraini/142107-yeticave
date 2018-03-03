@@ -33,7 +33,7 @@ function formatSum($price, $currency = '&nbsp;&#8381;') {
 function renderTemplate($path, $data) {
     $output = "";
     if (file_exists($path)) {
-        ob_start('ob_gzhandler');
+        ob_start();
         extract($data, EXTR_SKIP);
         require_once($path);
         $output = ob_get_clean();

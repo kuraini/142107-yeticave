@@ -76,3 +76,5 @@ CREATE TABLE `users_lots` (
   CONSTRAINT `users_lots_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `users_lots_fk_2` FOREIGN KEY (`lot_id`) REFERENCES `lots` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE FULLTEXT INDEX `lot_ft_search` ON `lots` (`title`, `description`);

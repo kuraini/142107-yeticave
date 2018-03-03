@@ -7,7 +7,7 @@ session_start();
 
 if (!isAuth()) {
     http_response_code(403);
-    exit();
+    exit("Ошибка: только зарегистрированные пользователи могут добавлять лоты");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
