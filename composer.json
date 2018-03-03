@@ -1,0 +1,13 @@
+{
+    "name": "htmlacademy/yeticave",
+    "description": "Website for auction sale of ski and showboard equipment",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Svetlana Borisova",
+            "email": "kuraini@yandex.ru"
+        }
+    ],
+    "require": {}
+}

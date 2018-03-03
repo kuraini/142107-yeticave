@@ -7,11 +7,11 @@
       <tr class="rates__item <?=$bet['is_winner'] ?? ''; ?> <?=$bet['rates_end'] ?? ''; ?>">
         <td class="rates__info">
           <div class="rates__img">
-            <img src="<?=$bet['lot_image']?>" width="54" height="40" alt="<?=htmlspecialchars($bet['lot_title']); ?>">
+            <img src="<?=$bet['lot_image'] ?? ''; ?>" width="54" height="40" alt="<?=htmlspecialchars($bet['lot_title']) ?? ''; ?>">
           </div>
-          <h3 class="rates__title"><a href="lot.php?id=<?=$bet['lot_id'] ?? ''; ?>"><?=htmlspecialchars($bet['lot_title']); ?></a></h3>
+          <h3 class="rates__title"><a href="lot.php?id=<?=$bet['lot_id'] ?? ''; ?>"><?=htmlspecialchars($bet['lot_title']) ?? ''; ?></a></h3>
           <?php if (isset($bet['is_winner'])): ?>
-          <p><?=htmlspecialchars($bet['contacts']); ?></p>
+          <p><?=htmlspecialchars($bet['contacts']) ?? ''; ?></p>
           <?php endif;?>
         </td>
         <td class="rates__category">
@@ -20,17 +20,17 @@
         <td class="rates__timer">
           <div class="timer <?=$bet['timer'] ?? ''; ?>">
           <?php if (is_numeric($bet['date_end'])): ?>
-            <?=countRemainingTime(htmlspecialchars($bet['date_end'])); ?>
+            <?=countRemainingTime(htmlspecialchars($bet['date_end'] ?? 0)); ?>
           <?php else: ?>
-            <?=htmlspecialchars($bet['date_end']); ?>
+            <?=htmlspecialchars($bet['date_end'] ?? 0); ?>
           <?php endif; ?>
           </div>
         </td>
         <td class="rates__price">
-          <?=formatSum(htmlspecialchars($bet['price']), '&nbsp;р'); ?>
+          <?=formatSum(htmlspecialchars($bet['price'] ?? 0), '&nbsp;р'); ?>
         </td>
         <td class="rates__time">
-          <?=formatTime(htmlspecialchars($bet['date_add']))?>
+          <?=formatTime(htmlspecialchars($bet['date_add'] ?? 0))?>
         </td>
       </tr>
     <?php endforeach; ?>
