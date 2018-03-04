@@ -178,7 +178,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 }
 
 /**
- * Функцция для получения данных из БД
+ * Функция для получения данных из БД
  *
  * @param mysqli $link ресурс соединения
  * @param string $sql SQL запрос с плейсхолдерами вместо значений
@@ -200,7 +200,7 @@ function selectAll($link, $sql, $data = []) {
 
 
 /**
- * Функцция для получения одной записи из БД
+ * Функция для получения одной записи из БД
  *
  * @param mysqli $link ресурс соединения
  * @param string $sql SQL запрос

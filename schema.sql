@@ -18,7 +18,7 @@ CREATE TABLE `users` (
   `password` char(100) NOT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `contacts` varchar(255) NOT NULL,
-  `date_reg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_reg` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -31,8 +31,8 @@ CREATE TABLE `lots` (
   `description` text NOT NULL,
   `start_price` int(11) UNSIGNED NOT NULL,
   `step` int(11) UNSIGNED NOT NULL,
-  `date_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_end` timestamp NOT NULL,
+  `date_start` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_end` datetime NOT NULL,
   `author_id` int(11) UNSIGNED NOT NULL,
   `winner_id` int(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -46,7 +46,7 @@ CREATE TABLE `lots` (
 
 CREATE TABLE `bets` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `price` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `lot_id` int(11) UNSIGNED NOT NULL,
